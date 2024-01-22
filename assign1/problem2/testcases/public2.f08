@@ -3,6 +3,6 @@ program ControlFlowExample
     y = x
   else
     y = -x
-  end if
+  end IF
 end program ControlFlowExample
 
