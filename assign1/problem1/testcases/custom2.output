@@ -1,0 +1,15 @@
+line no. 5, illformed string "This is in'valid/"
+TOKEN		COUNT		LEXEME
+----------------------------------------
+STRING		1		"I have 2 lines
+    that span 2 lines"
+STRING		1		'tehelka omelette;?!'
+DELIMITER	3		(
+DELIMITER	3		)
+DELIMITER	4		;
+KEYWORD		1		BEGIN
+KEYWORD		1		END
+KEYWORD		1		INTEGER
+IDENTIFIER	2		PRINT
+IDENTIFIER	1		print
+IDENTIFIER	1		x

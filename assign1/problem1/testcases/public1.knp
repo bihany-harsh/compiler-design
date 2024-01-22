@@ -1,13 +1,10 @@
 BEGIN
-    INTEGER x, y;
-    DOUBLE z;
-    z := 0000x89 ;
-    x := 78;
+    INTEGER x, y, X;
+    x := 10;
     y := 20;
-    INTEGER w;
-    w := 0X670.89;
+    X := 0x78;
     IF x GT y THEN
         PRINT("x is greater than y");
-    ELSE
+    ELSE IF x gt y then
         PRINT("y is greater than x");
 END

@@ -1,0 +1,10 @@
+X := 0x123g;
+Y EQL 123x45f;
+x eql 000x12;
+y NeQ 016x143daad;
+x gT 0aex124;
+y := 0xx12a;
+x := 0x00123;
+z NOT 123.a3x521;
+y := 0x123.ac;
+END

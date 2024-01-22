@@ -1,0 +1,36 @@
+line no. 4, leading zeros not allowed 0123
+line no. 6, leading zeros not allowed 00.123
+line no. 7, unidentified token =
+TOKEN		COUNT		LEXEME
+----------------------------------------
+OPERATOR	1		%
+OPERATOR	1		&
+OPERATOR	1		*
+OPERATOR	1		+
+OPERATOR	1		-
+INTEGER		1		123
+FLOATING_POINT	1		1643.21
+OPERATOR	2		:=
+DELIMITER	4		;
+IDENTIFIER	1		Began
+KEYWORD		1		EnD
+OPERATOR	1		GT
+KEYWORD		1		INTEGER
+IDENTIFIER	1		This
+IDENTIFIER	1		X
+IDENTIFIER	1		Y
+IDENTIFIER	1		Z
+DELIMITER	1		[
+DELIMITER	1		]
+OPERATOR	2		^
+IDENTIFIER	1		a
+IDENTIFIER	1		bunch
+IDENTIFIER	1		identifier
+IDENTIFIER	1		is
+IDENTIFIER	1		k
+OPERATOR	1		nEQ
+IDENTIFIER	1		of
+KEYWORD		1		procedure
+KEYWORD		1		switch
+IDENTIFIER	1		x
+DELIMITER	1		}

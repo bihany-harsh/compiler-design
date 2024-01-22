@@ -1,0 +1,11 @@
+Began
+    This is a bunch of identifier
+    INTEGER x;
+    X := 0123; { doesn't work 
+}
+    Y := 00.123; { invalid }
+    Z = 1643.21;{ This is valid }
+    k GT procedure switch nEQ +-* ^^ 
+    % {}& 
+}[123]
+EnD

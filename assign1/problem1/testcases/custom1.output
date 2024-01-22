@@ -1,0 +1,19 @@
+line no. 4, identifier cannot begin with a digit 12abc
+line no. 4, unidentified token _
+TOKEN		COUNT		LEXEME
+----------------------------------------
+DELIMITER	3		,
+INTEGER		1		54
+DELIMITER	3		;
+IDENTIFIER	1		ABOOLEAN
+KEYWORD		1		ARRAY
+KEYWORD		2		BEGIN
+KEYWORD		1		BOOLEAN
+IDENTIFIER	1		BOOLEANABC
+KEYWORD		2		Begin
+KEYWORD		1		DOUBLE
+KEYWORD		1		End
+KEYWORD		1		INTEGER
+IDENTIFIER	1		X
+IDENTIFIER	1		asfva
+IDENTIFIER	1		x
