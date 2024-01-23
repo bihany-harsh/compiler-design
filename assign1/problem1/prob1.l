@@ -113,7 +113,7 @@ ID              (?-i:{LETTER}({LETTER}|{DIGIT})*)
 {WHOLE}"."{DIGIT}{7,}                       { snprintf(error_string, sizeof(error_string), "line no.: %d \t No more than 6 decimal digits allowed.", yylineno); print_error(); }
   /* Invalid float without the whole number part */
 "."{DIGIT}+                                 { snprintf(error_string, sizeof(error_string), "line no.: %d \t Did you mean 0%s.", yylineno, yytext); print_error(); }
-  /* Invalid strings */
+   /* Invalid strings */
 (\"[^\'\"]*\'[^\'\"]*\")|(\'[^\'\"]*\"[^\'\"]*\')   { snprintf(error_string, sizeof(error_string), "line no.: %d \t Errorneous string `%s`.", yylineno, yytext); print_error(); }
 
 

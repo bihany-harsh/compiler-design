@@ -1,3 +1,3 @@
 program Compilers
-  print *, "Hello World, Welcome to compilers!"
+  print *, "Hello World, to compilers!
 end program Compilers

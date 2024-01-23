@@ -122,6 +122,20 @@ WS                      [ \t\r\f\n]|\r\n
 {DELIM}                                   { INSTALL_DATA(TOK_DELIM, true); }
 {SPECIAL_CHARS}                           { INSTALL_DATA(TOK_SPECIAL_CHAR, true); }
 
+  /* ERROR CASES */
+  
+  /* Names with length more than 63 */
+{LETTERS}{ALPHANUMERIC}{63,}              { snprintf(error_string, sizeof(error_string), "line no.: %d \t Names are limited to be of length less than equal to 63", yylineno); print_error(); }
+  /* Invalid Identifier */
+(({DIGITS}|{UNDERSCORE})+){NAMES}         { snprintf(error_string, sizeof(error_string), "line no.: %d \t An identifier name starts with a letter.", yylineno); print_error(); }
+   /* Invalid strings */
+(\"([^\'\"]*\'[^\'\"]*)+\")               { snprintf(error_string, sizeof(error_string), "line no.: %d \t Errorneous string `%s`.", yylineno, yytext); print_error(); }
+  /* Invalid strings - without closing apostophe */
+\"[^\"]*                                  { snprintf(error_string, sizeof(error_string), "line no.: %d \t Errorneous string `%s`.", yylineno, yytext); print_error(); }
+ 
+
+
+
 %%
 
 int main (int argc, char **argv) {
