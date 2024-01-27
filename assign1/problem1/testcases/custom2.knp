@@ -1,7 +1,0 @@
-BEGIN
-    PRINT("I have 2 lines
-    that span 2 lines");
-    print('tehelka omelette;?!');
-    PRINT("This is in'valid/");
-    INTEGER x;
-END

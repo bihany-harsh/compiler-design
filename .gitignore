@@ -1,3 +1,9 @@
 *.cpp
 *.out
+*.log
+*.pyg
+*.tex
+*.aux
+*.synctex.gz
 .DS_Store
+testcases/

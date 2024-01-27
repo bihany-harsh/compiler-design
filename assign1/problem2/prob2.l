@@ -91,17 +91,17 @@ UNDERSCORE              _
 SPECIAL_CHARS           " "|\\|"{"|"}"|","|"."|":"|";"|"!"|\"|"~"|"?"|\'|"`"|"^"|"|"|"$"|"#"|"@"
 ALPHANUMERIC            {LETTERS}|{DIGITS}|{UNDERSCORE}
 NAMES                   {LETTERS}({ALPHANUMERIC}){0,62}
-KEYWORDS                (?i:allocatable|allocate|assign|associate|asynchronous|backspace|bind|call|case|class|close|common|contains|continue|cycle|codimension|contiguous|critical|data|deallocate|deferred|dimension|do|else|elsewhere|end|endfile|endif|entry|equivalence|exit?|external|enum|enumerator|extends|forall|final|flush|format|function|goto|generic|import|if|implicit|inquire|intrinsic|include|interface|intent|lock|module|nopass|namelist|nullify|open|only|operator|optional|parameter|pause|print|program|pointer|private|pass|protected|procedure|public|read|return|recursive|result|rewind|rewrite|save|stop|subroutine|select|sequence|submodule|target|then|use|value|unlock|volatile|while|write)
+KEYWORDS                (?i:allocatable|allocate|assign|associate|asynchronous|backspace|bind|call|case|class|close|common|contains|continue|cycle|codimension|contiguous|critical|data|deallocate|deferred|dimension|do|else|elsewhere|end|endfile|endif|entry|equivalence|exit|external|enum|enumerator|extends|forall|final|flush|format|function|goto|generic|import|if|implicit|inquire|intrinsic|include|interface|intent|lock|module|nopass|namelist|nullify|open|only|operator|optional|parameter|pause|print|program|pointer|private|pass|protected|procedure|public|read|return|recursive|result|rewind|rewrite|save|stop|subroutine|select|sequence|submodule|target|then|use|value|unlock|volatile|while|write)
 DIGIT_STRING            {DIGITS}+
 KIND_PARAM              {DIGIT_STRING}|{NAMES}
-INT_LITERAL             {DIGIT_STRING}(_{KIND_PARAM})?
-SIGNIFICAND             ({DIGIT_STRING}"."{DIGIT_STRING}?)|"."{DIGIT_STRING}
 EXPONENT_LETTER         "E"|"D"
 SIGN                    "+"|"-"
 SIGNED_INT              {SIGN}?{DIGIT_STRING}
-REAL_LITERAL            ({SIGNIFICAND}({EXPONENT_LETTER}{DIGIT_STRING})?(_{KIND_PARAM})?)|({DIGIT_STRING}{EXPONENT_LETTER}{SIGNED_INT})(_{KIND_PARAM})?
+SIGNIFICAND             ({SIGNED_INT}"."{DIGIT_STRING}?)|{SIGN}?"."{DIGIT_STRING}
+REAL_LITERAL            ({SIGNIFICAND}({EXPONENT_LETTER}{SIGNED_INT})?(_{KIND_PARAM})?)|({DIGIT_STRING}{EXPONENT_LETTER}{SIGNED_INT})(_{KIND_PARAM})?
+INT_LITERAL             {SIGNED_INT}(_{KIND_PARAM})?
 LOGICAL_LITERAL         (".TRUE."(_{KIND_PARAM})?)|(".FALSE."(_{KIND_PARAM})?)
-CHAR_LITERAL            \"[^\'\"]*\"|\'[^\'\"]*\'
+CHAR_LITERAL            \"[^\'\"]*\"
 REL_OPERATOR            ".EQ."|".NE."|".LT."|".LE."|".GT."|".GE."|"=="|"/="|"<"|"<="|">"|">="
 INTRINSIC_OPERATOR      "**"|"*"|"/"|{SIGN}|"//"|{REL_OPERATOR}|".NOT."|".AND."|".OR."|".EQV."|".NEQV."
 OPERATOR                "="|{INTRINSIC_OPERATOR}|"&&"|"<<"|">>"|"||"
@@ -114,10 +114,10 @@ WS                      [ \t\r\f\n]|\r\n
 {COMMENTS}|{WS}
 {KEYWORDS}                                { INSTALL_DATA(TOK_KEYWORD, true);  }
 {NAMES}                                   { INSTALL_DATA(TOK_NAME, true); }
-{INT_LITERAL}                             { INSTALL_DATA(TOK_INT_LITERAL, true); }
-{REAL_LITERAL}                            { INSTALL_DATA(TOK_REAL_LITERAL, true); }
-{LOGICAL_LITERAL}                         { INSTALL_DATA(TOK_LOGICAL_LITERAL, true); }
-{CHAR_LITERAL}                            { INSTALL_DATA(TOK_CHAR_LITERAL, true); }
+{INT_LITERAL}                             { INSTALL_DATA(TOK_INT_LITERAL, false); }
+{REAL_LITERAL}                            { INSTALL_DATA(TOK_REAL_LITERAL, false); }
+{LOGICAL_LITERAL}                         { INSTALL_DATA(TOK_LOGICAL_LITERAL, false); }
+{CHAR_LITERAL}                            { INSTALL_DATA(TOK_CHAR_LITERAL, false); }
 {OPERATOR}                                { INSTALL_DATA(TOK_OPERATOR, true); }
 {DELIM}                                   { INSTALL_DATA(TOK_DELIM, true); }
 {SPECIAL_CHARS}                           { INSTALL_DATA(TOK_SPECIAL_CHAR, true); }
@@ -132,7 +132,8 @@ WS                      [ \t\r\f\n]|\r\n
 (\"([^\'\"]*\'[^\'\"]*)+\")               { snprintf(error_string, sizeof(error_string), "line no.: %d \t Errorneous string `%s`.", yylineno, yytext); print_error(); }
   /* Invalid strings - without closing apostophe */
 \"[^\"]*                                  { snprintf(error_string, sizeof(error_string), "line no.: %d \t Errorneous string `%s`.", yylineno, yytext); print_error(); }
- 
+  /* Exponent is a real number and not a string */
+{SIGNIFICAND}{EXPONENT_LETTER}{SIGNED_INT}"."{DIGIT_STRING}   { snprintf(error_string, sizeof(error_string), "line no.: %d \t Exponent can only be a signed integer literal.", yylineno); print_error(); }
 
 
 

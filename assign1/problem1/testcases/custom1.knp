@@ -1,6 +1,0 @@
-BEGIN
-Begin 
-    INTEGER x, X;
-    DOUBLE 12abc, 54_asfva;
-    BOOLEAN ARRAY ABOOLEAN, BOOLEANABC;
-End

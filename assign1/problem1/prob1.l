@@ -115,6 +115,7 @@ ID              (?-i:{LETTER}({LETTER}|{DIGIT})*)
 "."{DIGIT}+                                 { snprintf(error_string, sizeof(error_string), "line no.: %d \t Did you mean 0%s.", yylineno, yytext); print_error(); }
    /* Invalid strings */
 (\"[^\'\"]*\'[^\'\"]*\")|(\'[^\'\"]*\"[^\'\"]*\')   { snprintf(error_string, sizeof(error_string), "line no.: %d \t Errorneous string `%s`.", yylineno, yytext); print_error(); }
+\"[^\"]*|\'[^']*                            { snprintf(error_string, sizeof(error_string), "line no.: %d \t Errorneous string `%s`.", yylineno, yytext); print_error(); }
 
 
 {COMMENT}
@@ -125,7 +126,7 @@ ID              (?-i:{LETTER}({LETTER}|{DIGIT})*)
 {DELIM}                                     { INSTALL_DATA(TOK_DELIM, false); }
 {FLOAT}                                     { INSTALL_DATA(TOK_FLOAT, false); }
 {WHOLE}                                     { INSTALL_DATA(TOK_INT, false); }
-{HEX}                                       { INSTALL_DATA(TOK_HEX, true); }
+{HEX}                                       { INSTALL_DATA(TOK_HEX, false); }
 {ID}                                        { INSTALL_DATA(TOK_ID, false); }
 
   /* SOME ERROR CASES */
