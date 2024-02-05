@@ -12,6 +12,11 @@
   
   long MARKS_ARRAY[MM] = {0};
   extern FILE *yyin;
+
+  int yylex(void);
+  void yyerror (char const *s) {
+    fprintf (stderr, "%s\n", s);
+  }
 %}
 
 %token T_OPEN_TAG_ANG T_CLOSE_TAG_ANG T_TAG_CLOSE
@@ -29,12 +34,13 @@
 
 %%
 
-quiz:                     t_quiz questions t_quiz_close { printf("quiz started\n"); };
+quiz:                     t_quiz questions t_quiz_close;
 t_quiz:                   T_OPEN_TAG_ANG T_QUIZ T_TAG_CLOSE;
 t_quiz_close:             T_CLOSE_TAG_ANG T_QUIZ T_TAG_CLOSE;
 questions:                question questions
-                          | question { N_QUES++; printf("question: %d\n", N_QUES); };
-question:                 singleselect_qa_pair
+                          | question;
+question:                 
+                          | singleselect_qa_pair { N_QUES++; N_SINGLESELECT_QUES++; printf("N_QUES: %ld, N_SINGLE: %ld\n", N_QUES, N_SINGLESELECT_QUES); }
                           | multiselect_qa_pair;
 singleselect_qa_pair:     t_singleselect question_text answer_options t_singleselect_close;
 t_singleselect:           T_OPEN_TAG_ANG T_SINGLESELECT marks_attr T_TAG_CLOSE;
