@@ -1,4 +1,6 @@
 *.cpp
+*.c
+*.h
 *.out
 *.log
 *.pyg
