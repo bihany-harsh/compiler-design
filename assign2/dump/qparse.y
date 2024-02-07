@@ -10,34 +10,35 @@
   }
 %}
 
-%token T_OPEN_TAG_ANG T_CLOSE_TAG_ANG T_TAG_CLOSE
-%token T_QUIZ
-%token T_STRING
-%token T_SINGLESELECT
-%token T_MARKS
-%token T_EQL
-%token T_INTEGER
-%token T_QUOTE
-%token T_OTHER
+%token TOK_OPEN TOK_CLOSE TOK_FSLASH
+%token TOK_QUIZ
+%token TOK_SINGLESELECT
+%token TOK_MULTISELECT
+%token TOK_MARKS
+%token TOK_EQL
+%token TOK_DQUOTE
+%token TOK_INTEGER
+%token TOK_CHOICE
+%token TOK_CORRECT
+%token TOK_STRING
 
 %%
 
-quiz:                           t_quiz questions_and_t_quiz_close { printf("quiz tag detected\n"); };
-questions_and_t_quiz_close:     optional_questions t_quiz_close { printf("questions and quiz close detected\n"); };
-t_quiz:                         T_OPEN_TAG_ANG T_QUIZ T_TAG_CLOSE;
-t_quiz_close:                   T_CLOSE_TAG_ANG T_QUIZ T_TAG_CLOSE;
-optional_questions:             questions
-                                | /* empty */;
-questions:                      question questions
-                                | question;
-question:                       singleselect_qa_pair;
-                                /*| multiselect_qa_pair*/
-singleselect_qa_pair:           t_singleselect question_text single_correct_answer_options t_singleselect_close;
-t_singleselect:                 T_OPEN_TAG_ANG T_SINGLESELECT marks_attr T_TAG_CLOSE;
-t_singleselect_close:           T_CLOSE_TAG_ANG T_SINGLESELECT T_TAG_CLOSE;
-question_text:                  T_STRING;
-marks_attr:                     T_MARKS T_EQL T_QUOTE T_INTEGER T_QUOTE;
-single_correct_answer_options:  T_STRING T_QUOTE; /* yet to be defined proper */
+quiz:                   TOK_OPEN TOK_QUIZ body TOK_FSLASH TOK_QUIZ TOK_CLOSE;
+body:                   TOK_STRING questions;
+questions:              singleselect_ques questions
+                        | multiselect_ques questions
+                        | ;
+singleselect_ques:      TOK_SINGLESELECT TOK_MARKS TOK_EQL TOK_DQUOTE TOK_INTEGER TOK_DQUOTE TOK_STRING single_ques_options TOK_FSLASH TOK_SINGLESELECT TOK_STRING;
+multiselect_ques:       TOK_MULTISELECT TOK_MARKS TOK_EQL TOK_DQUOTE TOK_INTEGER TOK_DQUOTE TOK_STRING multi_ques_options TOK_FSLASH TOK_MULTISELECT TOK_STRING;
+single_ques_options:    three_or_four_choices correct;
+multi_ques_options:     three_or_four_choices correct_options;
+three_or_four_choices:  choice choice choice
+                        | choice choice choice choice;
+choice:                 TOK_CHOICE TOK_STRING TOK_FSLASH TOK_CHOICE TOK_STRING;
+correct_options:        correct correct correct
+                        | correct correct correct correct;
+correct:                TOK_CORRECT TOK_STRING TOK_FSLASH TOK_CORRECT TOK_STRING;
 
 %%
 

@@ -6,34 +6,38 @@
     #include "qparse.tab.h"
 %}
 
+WS              [ \t\n\r]+
+OPEN_TAG        "<"
+CLOSE_TAG       ">"
+FSLASH          "/"
 QUIZ            "quiz"
 SINGLESELECT    "singleselect"
+MULTISELECT     "multiselect"
 MARKS           "marks"
-WS              [ \t\n]+
-OPEN_TAG_ANG    "<"{WS}*
-TAG_CLOSE       {WS}*">"
-CLOSE_TAG_ANG   "<"{WS}*"/"{WS}*
-STRING          [^\s\n<>][^\n<>]*
 EQL             "="
+DQUOTE          \"
 DIGIT           [0-9]
 INTEGER         {DIGIT}+
-
+CHOICE          "choice"
+CORRECT         "correct"
+STRING          ">"[^<>]*"<"
 
 %%
 
-{WS}                                { /*Ignore whitespace*/ }
-{OPEN_TAG_ANG}                      { return T_OPEN_TAG_ANG; }
-{CLOSE_TAG_ANG}                     { return T_CLOSE_TAG_ANG; }
-{TAG_CLOSE}                         { return T_TAG_CLOSE; }
-{QUIZ}                              { return T_QUIZ; }
-{SINGLESELECT}                      { return T_SINGLESELECT; }
-{EQL}                               { return T_EQL; }
-{MARKS}                             { return T_MARKS; }
-"\""                                { return T_QUOTE; }
-{INTEGER}                           { return T_INTEGER; }
-{STRING}                            { return T_STRING; }
-.                                   { return T_OTHER; }
-
+{WS}                        
+{OPEN_TAG}                  { return TOK_OPEN; }
+{CLOSE_TAG}                 { return TOK_CLOSE; }
+{QUIZ}                      { return TOK_QUIZ; }
+{FSLASH}                    { return TOK_FSLASH; }
+{SINGLESELECT}              { return TOK_SINGLESELECT; }
+{MULTISELECT}               { return TOK_MULTISELECT; }
+{MARKS}                     { return TOK_MARKS; }
+{EQL}                       { return TOK_EQL; }
+{DQUOTE}                    { return TOK_DQUOTE; }
+{INTEGER}                   { return TOK_INTEGER; }
+{CHOICE}                    { return TOK_CHOICE; }
+{CORRECT}                   { return TOK_CORRECT; }
+{STRING}                    { return TOK_STRING; }
 
 %%
 
@@ -44,7 +48,6 @@ INTEGER         {DIGIT}+
 //     } else {
 //         yyin = stdin;
 //     }
-
 //     yylex();
 
 //     return 0;
