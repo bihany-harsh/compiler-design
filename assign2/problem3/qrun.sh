@@ -3,6 +3,6 @@
 bison -d qparse.y
 flex -o qscan.c qscan.l  
 
-gcc qscan.c qparse.tab.c -lfl
+gcc qscan.c qparse.tab.c -ll
     
-./a.out ./test.html
+./a.out $1

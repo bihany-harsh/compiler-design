@@ -24,7 +24,7 @@ STRING          ">"[^<>]*"<"
 
 %%
 
-{WS}                        
+{WS} 
 {OPEN_TAG}                  { return TOK_OPEN; }
 {CLOSE_TAG}                 { return TOK_CLOSE; }
 {QUIZ}                      { return TOK_QUIZ; }
@@ -34,10 +34,11 @@ STRING          ">"[^<>]*"<"
 {MARKS}                     { return TOK_MARKS; }
 {EQL}                       { return TOK_EQL; }
 {DQUOTE}                    { return TOK_DQUOTE; }
-{INTEGER}                   { return TOK_INTEGER; }
+{INTEGER}                   { yylval.NUM = atoi(yytext); return TOK_INTEGER; }
 {CHOICE}                    { return TOK_CHOICE; }
 {CORRECT}                   { return TOK_CORRECT; }
 {STRING}                    { return TOK_STRING; }
+.
 
 %%
 
