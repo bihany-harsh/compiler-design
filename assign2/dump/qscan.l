@@ -27,11 +27,11 @@ CORRECT                 "correct"
 {RBRACKET}          { return TOK_RBRACKET; }
 {FSLASH}            { return TOK_FSLASH; }
 {QUIZ}              { return TOK_QUIZ; }
-{SINGLESELECT}      { return TOK_SINGLESELECT; }
-{MULTISELECT}       { return TOK_MULTISELECT; }
+{SINGLESELECT}      { yylval.STR = yytext; return TOK_SINGLESELECT; }
+{MULTISELECT}       { yylval.STR = yytext; return TOK_MULTISELECT; }
 {MARKS}             { return TOK_MARKS; }
 {EQL}               { return TOK_EQL; }
-{STRING}            { return TOK_STRING; }
+{STRING}            { yylval.STR = yytext; return TOK_STRING; }
 {CHOICE}            { return TOK_CHOICE; }
 {CORRECT}           { return TOK_CORRECT; }
 .                   { /* ignore everything else */ }
