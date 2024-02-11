@@ -1,6 +1,7 @@
 *.cpp
 *.c
 *.h
+*.html
 *.out
 *.log
 *.pyg

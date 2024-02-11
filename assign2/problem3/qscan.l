@@ -6,44 +6,39 @@
     #include "qparse.tab.h"
 %}
 
-WS              [ \t\n\r]+
-OPEN_TAG        "<"
-CLOSE_TAG       ">"
-FSLASH          "/"
-QUIZ            "quiz"
-SINGLESELECT    "singleselect"
-MULTISELECT     "multiselect"
-MARKS           "marks"
-EQL             "="
-DQUOTE          \"
-DIGIT           [0-9]
-INTEGER         {DIGIT}+
-CHOICE          "choice"
-CORRECT         "correct"
-STRING          ">"[^<>]*"<"
+WS                      [ \t\n\r]+
+LBRACKET                "<"
+RBRACKET                ">"
+FSLASH                  "/"
+QUIZ                    "quiz"
+SINGLESELECT            "singleselect"
+MULTISELECT             "multiselect"
+MARKS                   "marks"
+EQL                     "="
+STRING                  \"[^\"]+\"
+CHOICE                  "choice"
+CORRECT                 "correct"
+
 
 %%
 
-{WS} 
-{OPEN_TAG}                  { return TOK_OPEN; }
-{CLOSE_TAG}                 { return TOK_CLOSE; }
-{QUIZ}                      { return TOK_QUIZ; }
-{FSLASH}                    { return TOK_FSLASH; }
-{SINGLESELECT}              { return TOK_SINGLESELECT; }
-{MULTISELECT}               { return TOK_MULTISELECT; }
-{MARKS}                     { return TOK_MARKS; }
-{EQL}                       { return TOK_EQL; }
-{DQUOTE}                    { return TOK_DQUOTE; }
-{INTEGER}                   { yylval.NUM = atoi(yytext); return TOK_INTEGER; }
-{CHOICE}                    { return TOK_CHOICE; }
-{CORRECT}                   { return TOK_CORRECT; }
-{STRING}                    { return TOK_STRING; }
-.
+{WS}                { /* ignore whitespace */ }
+{LBRACKET}          { return TOK_LBRACKET; }
+{RBRACKET}          { return TOK_RBRACKET; }
+{FSLASH}            { return TOK_FSLASH; }
+{QUIZ}              { return TOK_QUIZ; }
+{SINGLESELECT}      { yylval.STR = yytext; return TOK_SINGLESELECT; }
+{MULTISELECT}       { yylval.STR = yytext; return TOK_MULTISELECT; }
+{MARKS}             { return TOK_MARKS; }
+{EQL}               { return TOK_EQL; }
+{STRING}            { yylval.STR = yytext; return TOK_STRING; }
+{CHOICE}            { return TOK_CHOICE; }
+{CORRECT}           { return TOK_CORRECT; }
+.                   { /* ignore everything else */ }
 
 %%
 
 // int main(int argc, const char** argv) {
-
 //     if (argc > 1) {
 //         yyin = fopen(argv[1], "r");
 //     } else {
