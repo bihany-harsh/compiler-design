@@ -97,6 +97,12 @@
             snprintf(error_string, sizeof(error_string), "line no.: %d \t Marks should be in the range 1-8.", yylineno_);
             yyerror(error_string);
         }
+        if (!qtype) {
+            if (_marks > 2) {
+                snprintf(error_string, sizeof(error_string), "line no.: %d \t Single select question should have marks less than or equal to 2.", yylineno_);
+                yyerror(error_string);
+            }
+        }
         N_marks += _marks;
         N_quess[_marks - 1]++;
         N_ques++;
