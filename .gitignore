@@ -2,6 +2,7 @@
 *.c
 *.h
 *.html
+*.txt
 *.out
 *.log
 *.pyg
